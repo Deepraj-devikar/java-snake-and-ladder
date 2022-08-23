@@ -21,7 +21,7 @@ public class SnakeAndLadderGame {
 			switch (playOption) {
 				case LADDER:
 					System.out.print("Play option is Ladder the player moves ahead by the "+crrDice+" number of position");
-					playerPosition += crrDice;
+					playerPosition = (playerPosition + crrDice) <= 100 ? (playerPosition + crrDice) : playerPosition;
 					break;
 				case SNAKE:
 					System.out.print("Play option is Snake the player moves behind by the "+crrDice+" number of position");
