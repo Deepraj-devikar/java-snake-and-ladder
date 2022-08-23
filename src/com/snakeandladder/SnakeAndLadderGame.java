@@ -15,17 +15,23 @@ public class SnakeAndLadderGame {
 	}
 	
 	public void play() {
-		int crrDice = this.dice();
-		int playOption = (int) Math.floor(Math.random() * 10) % 3;
-		switch (playOption) {
-			case LADDER:
-				System.out.println("Play option is Ladder the player moves ahead by the "+crrDice+" number of position");
-				break;
-			case SNAKE:
-				System.out.println("Play option is Snake the player moves behind by the "+crrDice+" number of position");
-				break;
-			default:
-				System.out.println("Play option is No Play the player stays in the same position");
+		while (this.playerPosition < 100 ) {
+			int crrDice = this.dice();
+			int playOption = (int) Math.floor(Math.random() * 10) % 3;
+			switch (playOption) {
+				case LADDER:
+					System.out.print("Play option is Ladder the player moves ahead by the "+crrDice+" number of position");
+					playerPosition += crrDice;
+					break;
+				case SNAKE:
+					System.out.print("Play option is Snake the player moves behind by the "+crrDice+" number of position");
+					playerPosition -= crrDice;
+					playerPosition = playerPosition < 0 ? 0 : playerPosition;
+					break;
+				default:
+					System.out.print("Play option is No Play the player stays in the same position");
+			}
+			System.out.println(" : Players current position is "+playerPosition);
 		}
 	}
 	
