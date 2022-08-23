@@ -4,13 +4,16 @@ public class SnakeAndLadderGame {
 	public static final int LADDER = 1;
 	public static final int SNAKE = 2;
 	public static int playerPosition;
+	public static int dicePlayed;
 	
 	SnakeAndLadderGame() {
 		this.playerPosition = 0;
+		this.dicePlayed = 0;
 		System.out.println("Snake and Ladder game starts player position is "+this.playerPosition);
 	}
 	
 	public int dice() {
+		dicePlayed++;
 		return (int) Math.floor(Math.random() * 10) % 6 + 1;
 	}
 	
@@ -33,6 +36,7 @@ public class SnakeAndLadderGame {
 			}
 			System.out.println(" : Players current position is "+playerPosition);
 		}
+		System.out.println(this.dicePlayed+" time dice played to win the game");
 	}
 	
 	
