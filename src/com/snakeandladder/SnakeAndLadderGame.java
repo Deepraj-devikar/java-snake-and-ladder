@@ -3,12 +3,18 @@ package com.snakeandladder;
 public class SnakeAndLadderGame {
 	public static final int LADDER = 1;
 	public static final int SNAKE = 2;
-	public static int playerPosition;
-	public static int dicePlayed;
+	public static final String WON = "WON";
+	public static final String NOT_WON = "NOT WON";
+	public static int WIN_POSITION = 100;
 	
-	SnakeAndLadderGame() {
+	public int playerPosition;
+	public int dicePlayed;
+	public String playerName;
+	
+	SnakeAndLadderGame(String playerName) {
 		this.playerPosition = 0;
 		this.dicePlayed = 0;
+		this.playerName = playerName;
 		System.out.println("Snake and Ladder game starts player position is "+this.playerPosition);
 	}
 	
@@ -17,27 +23,40 @@ public class SnakeAndLadderGame {
 		return (int) Math.floor(Math.random() * 10) % 6 + 1;
 	}
 	
-	public void play() {
-		while (this.playerPosition < 100 ) {
-			int crrDice = this.dice();
-			int playOption = (int) Math.floor(Math.random() * 10) % 3;
-			switch (playOption) {
-				case LADDER:
-					System.out.print("Play option is Ladder the player moves ahead by the "+crrDice+" number of position");
-					playerPosition = (playerPosition + crrDice) <= 100 ? (playerPosition + crrDice) : playerPosition;
-					break;
-				case SNAKE:
-					System.out.print("Play option is Snake the player moves behind by the "+crrDice+" number of position");
-					playerPosition -= crrDice;
-					playerPosition = playerPosition < 0 ? 0 : playerPosition;
-					break;
-				default:
-					System.out.print("Play option is No Play the player stays in the same position");
-			}
-			System.out.println(" : Players current position is "+playerPosition);
+	public String round() {
+		int crrDice = this.dice();
+		int playOption = (int) Math.floor(Math.random() * 10) % 3;
+		boolean gotLadder = false;
+		switch (playOption) {
+			case LADDER:
+				System.out.println("\t Play option is Ladder the player moves ahead by the "+crrDice+" number of position");
+				playerPosition = (playerPosition + crrDice) <= 100 ? (playerPosition + crrDice) : playerPosition;
+				gotLadder = true;
+				break;
+			case SNAKE:
+				System.out.println("\t Play option is Snake the player moves behind by the "+crrDice+" number of position");
+				playerPosition -= crrDice;
+				playerPosition = playerPosition < 0 ? 0 : playerPosition;
+				break;
+			default:
+				System.out.println("\t Play option is No Play the player stays in the same position");
 		}
-		System.out.println(this.dicePlayed+" time dice played to win the game");
+		if (this.playerPosition == this.WIN_POSITION) {
+			return this.WON;
+		} else {
+			if (gotLadder) {
+				return this.round();
+			} else {
+				System.out.println("\t "+this.playerName+" current position is "+playerPosition);
+				return this.NOT_WON;
+			}
+		}
 	}
 	
-	
+	public void play() {
+		while (this.playerPosition < this.WIN_POSITION ) {
+			this.round();
+		}
+		System.out.println(this.dicePlayed+" time dice played to win the game");
+	}	
 }
